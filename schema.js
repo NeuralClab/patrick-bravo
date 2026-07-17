@@ -57,6 +57,59 @@ function buildSchema(route, site) {
         })),
       };
 
+    case "Person":
+      return {
+        ...base,
+        "@type": "ProfilePage",
+        mainEntity: {
+          "@type": "Person",
+          "@id": `${site.baseUrl}/#person`,
+          name: site.name,
+          url: site.baseUrl,
+          image: route.image || site.defaultImage,
+          description: route.description,
+          jobTitle: route.jobTitle || "Creador de contenido",
+          sameAs: site.sameAs,
+          ...(site.stats
+            ? {
+                interactionStatistic: site.stats.map((s) => ({
+                  "@type": "InteractionCounter",
+                  interactionType: "https://schema.org/FollowAction",
+                  userInteractionCount: s.followers,
+                  name: s.platform,
+                })),
+              }
+            : {}),
+        },
+      };
+
+    case "ServicePage": {
+      // Service conectado al Person vía @id (misma persona, no una entidad nueva)
+      const serviceNode = {
+        "@type": "Service",
+        name: route.title,
+        description: route.description,
+        serviceType: route.serviceType || "Contenido UGC",
+        provider: { "@id": `${site.baseUrl}/#person` },
+        areaServed: route.areaServed || "ES",
+        url: site.baseUrl + route.path,
+      };
+      const faqNode = route.faq
+        ? {
+            "@type": "FAQPage",
+            mainEntity: route.faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }
+        : null;
+      return {
+        ...base,
+        "@graph": faqNode ? [serviceNode, faqNode] : [serviceNode],
+      };
+    }
+
     case "SoftwareApplication":
       return {
         ...base,
