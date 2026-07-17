@@ -59,6 +59,20 @@ const ROUTES = [
     image: "https://patrick-bravo-kappa.vercel.app/img/og-home.jpg",
     // keywords objetivo (referencia interna, no se usa en el <head>):
     // creador de contenido (1mil-10mil) · influencer español (1mil-10mil)
+    faq: [
+      {
+        q: "¿Qué es un creador de contenido?",
+        a: "Un creador de contenido es una persona que produce publicaciones, vídeos o contenido para redes sociales de forma regular, construyendo una audiencia propia y colaborando con marcas.",
+      },
+      {
+        q: "¿Quién es Patrick Bravo?",
+        a: "Patrick Bravo es un creador de contenido e influencer español especializado en storytelling y transformación personal, con presencia en TikTok e Instagram.",
+      },
+      {
+        q: "¿Dónde puedo seguir a Patrick Bravo como influencer español?",
+        a: "Puedes seguir a Patrick Bravo en TikTok e Instagram como @patrick_bravo_oficial.",
+      },
+    ],
   },
   {
     path: "/para-marcas",
