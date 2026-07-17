@@ -31,6 +31,12 @@ const SITE = {
     "https://www.tiktok.com/@patrick_bravo_oficial",
     "https://www.instagram.com/patrick_bravo_oficial",
   ],
+  // Señales reputacionales (ajusta las cifras si cambian)
+  stats: [
+    { platform: "Instagram", followers: 18093 },
+    { platform: "TikTok", followers: 2921 },
+    { platform: "YouTube — Belleza de Hombre by Patrick Bravo", followers: 17500 },
+  ],
 };
 
 const ROUTES = [
@@ -42,7 +48,8 @@ const ROUTES = [
     changefreq: "weekly",
     priority: 1.0,
     lastmod: "2026-07-17",
-    type: "SoftwareApplication", // home = "presentación" del propio Patrick como marca/producto
+    type: "Person", // home = presentación de Patrick como persona/creador, no como producto
+    jobTitle: "Creador de contenido / Influencer",
     image: "https://patrick-bravo-kappa.vercel.app/img/og-home.jpg",
     // keywords objetivo (referencia interna, no se usa en el <head>):
     // creador de contenido (1mil-10mil) · influencer español (1mil-10mil)
@@ -55,7 +62,9 @@ const ROUTES = [
     changefreq: "monthly",
     priority: 0.9,
     lastmod: "2026-07-17",
-    type: "FAQPage",
+    type: "ServicePage",
+    serviceType: "Vídeo UGC con guion propio y publicación cruzada",
+    areaServed: "ES",
     image: "https://patrick-bravo-kappa.vercel.app/img/og-para-marcas.jpg",
     faq: [
       {
