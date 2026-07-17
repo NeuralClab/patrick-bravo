@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patrick Bravo — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14171C;
+    --surface:#1B1F27;
+    --surface-2:#20242E;
+    --text:#F2EFE9;
+    --muted:#9399A6;
+    --warm:#FF6B45;
+    --warm-dim:#3A2620;
+    --cool:#3FE0C7;
+    --cool-dim:#16302D;
+    --line: rgba(242,239,233,0.09);
+    --display: 'Outfit', 'Arial', sans-serif;
+    --body: 'Sora', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  img,svg{display:block; max-width:100%;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  @media (max-width:640px){
+    .wrap{padding:0 20px;}
+  }
+
+  /* ---------- utility ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  .pillar-eyebrow.is-warm{color:var(--warm);}
+  .pillar-eyebrow.is-cool{color:var(--cool);}
+
+  .tag{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12.5px;
+    padding:6px 12px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    color:var(--text);
+    background:rgba(255,255,255,0.02);
+    margin:0 8px 8px 0;
+  }
+
+  .tag.is-warm{border-color:rgba(255,107,69,0.35); color:#FFC9B6;}
+  .tag.is-cool{border-color:rgba(63,224,199,0.35); color:#B9F5EB;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:14px;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    padding:14px 26px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    color:var(--text);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px); border-color:rgba(242,239,233,0.35);}
+  .btn:focus-visible{outline:2px solid var(--text); outline-offset:3px;}
+
+  .btn.is-primary{
+    background:var(--text);
+    color:var(--bg);
+    border-color:var(--text);
+    font-weight:600;
+  }
+  .btn.is-primary:hover{background:#DCD8CE;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(20,23,28,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:var(--display);
+    font-size:20px;
+    letter-spacing:0.02em;
+  }
+  .logo span{color:var(--warm);}
+  .navlinks{
+    display:flex; gap:28px;
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:0.03em;
+  }
+  .navlinks a{text-decoration:none; color:var(--muted); transition:color .15s ease;}
+  .navlinks a:hover{color:var(--text);}
+  @media (max-width:640px){ .navlinks{display:none;} }
+
+  /* ---------- menú hamburguesa: solo móvil ---------- */
+  .hamburger-btn{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    width:38px; height:38px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+  }
+  .hamburger-btn svg{width:18px; height:18px;}
+  .mobile-menu{
+    display:none;
+    flex-direction:column;
+    padding-bottom:6px;
+  }
+  .mobile-menu a{
+    display:block;
+    padding:14px 2px;
+    font-family:var(--mono);
+    font-size:14px;
+    letter-spacing:0.03em;
+    color:var(--muted);
+    text-decoration:none;
+    border-top:1px solid var(--line);
+    transition:color .15s ease;
+  }
+  .mobile-menu a:hover{color:var(--text);}
+  .mobile-menu.is-open{display:flex;}
+  @media (max-width:640px){
+    .hamburger-btn{display:flex;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:70px 0;
+    min-height:620px;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr 420px;
+    gap:56px;
+    align-items:center;
+    width:100%;
+  }
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; text-align:center;}
+  }
+  .hero-photo{
+    position:relative;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    aspect-ratio:4/5;
+  }
+  .hero-photo img{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center 15%;
+    display:block;
+  }
+  .hero-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,23,28,0) 55%, rgba(20,23,28,0.55) 100%);
+  }
+  @media (max-width:900px){
+    .hero-photo{max-width:340px; margin:0 auto; aspect-ratio:1/1;}
+  }
+  .hero-curve{
+    position:absolute;
+    left:0; right:0; bottom:-10px;
+    width:100%;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(52px, 9vw, 108px);
+    line-height:0.92;
+    letter-spacing:0.005em;
+    margin:18px 0 22px;
+  }
+  .hero h1 .accent{color:var(--warm);}
+  .hero p.lede{
+    font-size:clamp(17px,2.2vw,21px);
+    color:#D7D2C6;
+    max-width:560px;
+    margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  @media (max-width:900px){
+    .hero-actions{justify-content:center;}
+  }
+  /* ---------- hero: solo móvil (imagen primero, botones sin texto) ---------- */
+  @media (max-width:640px){
+    .hero-photo{order:-1;}
+    .hero-actions{gap:10px;}
+    .hero-actions .social-btn{
+      padding:0;
+      border:none;
+      background:transparent;
+      box-shadow:none;
+    }
+    .hero-actions .social-btn:hover{box-shadow:none; transform:none;}
+    .hero-actions .social-btn-label{display:none;}
+    .hero-actions .social-btn-icon{
+      width:42px;
+      height:42px;
+      background:var(--accent);
+      color:var(--bg);
+    }
+    .hero-actions .social-btn-icon svg{width:18px; height:18px;}
+  }
+  .social-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:13.5px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    text-decoration:none;
+    padding:8px 20px 8px 8px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+    box-shadow:0 1px 2px rgba(0,0,0,0.25);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .social-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--accent);
+    box-shadow:0 10px 24px -8px var(--accent-glow);
+  }
+  .social-btn:focus-visible{outline:2px solid var(--text); outline-offset:3px;}
+  .social-btn-icon{
+    width:30px; height:30px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    background:var(--accent-bg);
+    color:var(--accent);
+    transition:background .18s ease, color .18s ease;
+  }
+  .social-btn-icon svg{width:15px; height:15px;}
+  .social-btn:hover .social-btn-icon{
+    background:var(--accent);
+    color:var(--bg);
+  }
+
+  /* ---------- compact icon-only social button (contacto) ---------- */
+  .social-btn-compact{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--accent);
+    box-shadow:0 1px 2px rgba(0,0,0,0.25);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+  }
+  .social-btn-compact svg{width:19px; height:19px;}
+  .social-btn-compact:hover{
+    transform:translateY(-3px);
+    border-color:var(--accent);
+    background:var(--accent);
+    color:var(--bg);
+    box-shadow:0 10px 24px -8px var(--accent-glow);
+  }
+  .social-btn-compact:focus-visible{outline:2px solid var(--text); outline-offset:3px;}
+
+  /* ---------- profile (influencer, ancho completo) ---------- */
+  .profile{
+    padding:70px 0 90px;
+    border-bottom:1px solid var(--line);
+  }
+  .profile-grid{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:52px;
+    align-items:start;
+  }
+  @media (max-width:900px){
+    .profile-grid{grid-template-columns:1fr; text-align:center;}
+  }
+  .profile-photo{
+    position:relative;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    aspect-ratio:4/5;
+  }
+  .profile-photo img{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center 15%;
+    display:block;
+  }
+  .profile-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,23,28,0) 62%, rgba(20,23,28,0.4) 100%);
+  }
+  @media (max-width:900px){
+    .profile-photo{max-width:300px; margin:0 auto 32px;}
+  }
+  .profile-head{max-width:680px; margin-bottom:36px;}
+  .profile-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5vw,46px);
+    color:var(--warm);
+    margin:10px 0 16px;
+  }
+  .profile-head p{color:#D7D2C6; font-size:15.5px;}
+  .profile-body{max-width:760px;}
+  .profile-body .taglist{margin-bottom:30px;}
+  .profile-body .channels{margin-bottom:0;}
+
+  /* ---------- channel stats (donuts) ---------- */
+  .channel-stats{padding:20px 0 80px;}
+  .channel-stats-head{max-width:680px; margin-bottom:40px;}
+  .channel-stats-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(26px,4.5vw,38px);
+  }
+  .channel-stats-head p{color:var(--muted); margin-top:10px;}
+
+  .channel-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:32px;
+    display:grid;
+    grid-template-columns:230px 1fr;
+    gap:36px;
+    align-items:center;
+    margin-bottom:20px;
+  }
+  @media (max-width:720px){
+    .channel-card{grid-template-columns:1fr; text-align:center;}
+  }
+  .channel-card-head{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:16px;
+  }
+  @media (max-width:720px){ .channel-card-head{justify-content:center;} }
+  .channel-card-icon{
+    width:32px; height:32px;
+    border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.05);
+    flex-shrink:0;
+  }
+  .channel-card-icon svg{width:17px; height:17px;}
+  .channel-card-name{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:18px;
+  }
+  .donut-block{display:flex; flex-direction:column; align-items:center; gap:14px; margin-bottom:20px;}
+  .donut-legend{
+    display:flex; flex-direction:column; gap:6px;
+    font-family:var(--mono);
+    font-size:12px;
+  }
+  .donut-legend span{display:flex; align-items:center; gap:8px;}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .dot.is-f{background:#FF6B45;}
+  .dot.is-m{background:#3FE0C7;}
+
+  .age-bars{display:flex; flex-direction:column; gap:7px;}
+  .age-row{display:flex; align-items:center; gap:8px; font-size:11px; color:var(--muted); font-family:var(--mono);}
+  .age-row .age-label{width:46px; flex-shrink:0; text-align:right;}
+  .age-row .age-track{flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; display:flex;}
+  .age-row .age-fill{height:100%; border-radius:3px;}
+  .age-row .age-fill-group{height:100%; display:flex; border-radius:3px; overflow:hidden;}
+  .age-row .age-pct{width:34px; text-align:left; flex-shrink:0; color:#C9C4B8;}
+  @media (max-width:720px){ .age-row .age-label{text-align:left;} }
+
+  .channel-meta{
+    font-size:13px;
+    color:#C9C4B8;
+    margin-bottom:18px;
+    line-height:1.55;
+  }
+  .channel-meta b{color:var(--text);}
+
+  .mini-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
+    gap:14px;
+  }
+  .mini-stat{
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .mini-stat-num{font-family:var(--mono); font-weight:600; font-size:17px; color:var(--text);}
+  .mini-stat-label{font-size:11.5px; color:var(--muted); margin-top:4px; line-height:1.35;}
+  .channel-note{
+    font-size:12px;
+    color:var(--muted);
+    font-style:italic;
+    margin-top:14px;
+  }
+  .channel-card-cta{margin-top:20px;}
+  @media (max-width:720px){ .channel-card-cta{display:flex; justify-content:center;} }
+
+  /* ---------- tiktok live ---------- */
+  .live-section{
+    padding:70px 0 80px;
+    border-top:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .live-inner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:44px;
+    align-items:center;
+  }
+  @media (max-width:860px){ .live-inner{grid-template-columns:1fr;} }
+  .live-inner h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(28px,5vw,42px);
+    margin:10px 0 16px;
+  }
+  .live-inner p.lead{color:#D7D2C6; font-size:15.5px; margin-bottom:0;}
+  .live-badge{
+    display:block;
+    height:110px;
+    width:auto;
+    margin:30px 0 18px;
+  }
+  @media (max-width:860px){ .live-badge{margin-left:auto; margin-right:auto; height:78px;} }
+  .live-list{list-style:none;}
+  .live-list li{
+    position:relative;
+    padding-left:22px;
+    margin-bottom:14px;
+    font-size:14.5px;
+    color:#D7D2C6;
+    line-height:1.5;
+  }
+  .live-list li::before{
+    content:"";
+    position:absolute; left:0; top:8px;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--warm);
+  }
+  .live-cta{
+    display:flex;
+    justify-content:center;
+    margin-top:44px;
+  }
+
+  /* ---------- comunicar ---------- */
+  .comm-section{
+    position:relative;
+    padding:70px 0 90px;
+    border-top:1px solid var(--line);
+    overflow:hidden;
+  }
+  .comm-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:72% 38%;
+    z-index:0;
+  }
+  .comm-overlay{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(20,23,28,0.86) 0%, rgba(20,23,28,0.8) 45%, rgba(20,23,28,0.92) 100%);
+    z-index:1;
+  }
+  .comm-section .wrap{position:relative; z-index:2;}
+  .comm-head{text-align:center; max-width:680px; margin:0 auto 46px;}
+  .comm-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5.5vw,50px);
+  }
+  .comm-head p{color:var(--muted); margin-top:12px;}
+  .comm-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:16px;
+  }
+  @media (max-width:860px){ .comm-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .comm-grid{grid-template-columns:1fr;} }
+  .comm-card{
+    background:rgba(27,31,39,0.9);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 22px;
+  }
+  .comm-card.is-strong{
+    background:rgba(58,38,32,0.92);
+    border-color:rgba(255,107,69,0.32);
+  }
+  .comm-card-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--warm);
+    margin-bottom:16px;
+  }
+  .comm-card-title{
+    font-weight:700;
+    font-size:15.5px;
+    margin-bottom:10px;
+  }
+  .comm-card-desc{
+    font-size:13.5px;
+    color:#B9B4A8;
+    line-height:1.55;
+  }
+
+  /* ---------- tech banner ---------- */
+  .tech-banner{
+    padding:90px 0;
+    text-align:center;
+    background:linear-gradient(180deg, var(--cool-dim) 0%, var(--bg) 340px);
+    border-bottom:1px solid var(--line);
+  }
+  .tech-banner .eyebrow{color:var(--cool);}
+  .tech-banner h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(34px,6vw,60px);
+    margin:14px 0 18px;
+    color:var(--text);
+  }
+  .tech-banner p{
+    color:#C9C4B8;
+    max-width:560px;
+    margin:0 auto 34px;
+    font-size:16px;
+  }
+  .tech-banner .btn.is-cool{
+    background:var(--cool);
+    color:var(--bg);
+    border-color:var(--cool);
+    font-weight:600;
+  }
+  .tech-banner .btn.is-cool:hover{background:#6BE9D6;}
+
+  /* ---------- split (legacy, ya no se usa en index) ---------- */
+  .split-head{
+    padding:70px 0 10px;
+    text-align:center;
+  }
+  .split-head h2{
+    font-family:var(--display);
+    font-size:clamp(30px,5vw,48px);
+    letter-spacing:0.01em;
+  }
+  .split-head p{color:var(--muted); margin-top:10px;}
+
+  .split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    margin:50px 0 90px;
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  @media (max-width:860px){
+    .split{grid-template-columns:1fr;}
+  }
+
+  .pillar{
+    background:var(--surface);
+    padding:44px 38px 40px;
+  }
+  .pillar.is-warm{ background: linear-gradient(180deg, var(--warm-dim) 0%, var(--surface) 260px); }
+  .pillar.is-cool{ background: linear-gradient(180deg, var(--cool-dim) 0%, var(--surface) 260px); }
+
+  .pillar h3{
+    font-family:var(--display);
+    font-size:34px;
+    letter-spacing:0.01em;
+    margin:10px 0 16px;
+  }
+  .pillar h3.is-warm{color:var(--warm);}
+  .pillar h3.is-cool{color:var(--cool);}
+
+  .pillar .intro{
+    color:#D7D2C6;
+    font-size:15.5px;
+    margin-bottom:22px;
+  }
+
+  .taglist{margin-bottom:28px;}
+
+  .channels{
+    display:flex; flex-direction:column; gap:14px;
+    margin-bottom:30px;
+  }
+  .channel-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:14px 16px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line);
+    border-radius:10px;
+    gap:12px;
+  }
+  .channel-name{font-weight:600; font-size:14.5px;}
+  .channel-stat{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--muted);
+    text-align:right;
+    white-space:nowrap;
+  }
+  .channel-stat b{color:var(--text); font-weight:600;}
+
+  .credlist{list-style:none; margin-bottom:24px;}
+  .credlist li{
+    position:relative;
+    padding-left:20px;
+    margin-bottom:10px;
+    font-size:14.5px;
+    color:#D7D2C6;
+  }
+  .credlist li::before{
+    content:"";
+    position:absolute; left:0; top:8px;
+    width:7px; height:7px;
+    border-radius:50%;
+  }
+  .pillar.is-warm .credlist li::before{background:var(--warm);}
+  .pillar.is-cool .credlist li::before{background:var(--cool);}
+
+  /* ---------- method ---------- */
+  .method{
+    padding:80px 0 90px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .method-head{text-align:center; margin-bottom:56px;}
+  .method-head h2{
+    font-family:var(--display);
+    font-size:clamp(30px,5vw,48px);
+  }
+  .method-head p{color:var(--muted); margin-top:12px; max-width:640px; margin-left:auto; margin-right:auto;}
+
+  .method-steps{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  @media (max-width:860px){ .method-steps{grid-template-columns:1fr;} }
+
+  .step{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:30px 26px;
+  }
+  .step-num{
+    font-family:var(--mono);
+    color:var(--warm);
+    font-size:13px;
+    margin-bottom:14px;
+  }
+  .step:nth-child(2) .step-num{color:var(--cool);}
+  .step:nth-child(3) .step-num{color:var(--text);}
+  .step h3{
+    font-family:var(--display);
+    font-size:22px;
+    letter-spacing:0.01em;
+    margin-bottom:16px;
+    text-transform:uppercase;
+  }
+  .step ul{list-style:none;}
+  .step ul li{
+    font-size:14.5px;
+    color:#C9C4B8;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+  }
+  .step ul li:first-child{border-top:none;}
+
+  /* ---------- scripts (guiones) ---------- */
+  .scripts{
+    padding:80px 0 90px;
+    border-bottom:1px solid var(--line);
+  }
+  .scripts-head{text-align:center; margin-bottom:44px;}
+  .scripts-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5vw,48px);
+  }
+  .scripts-head p.lead{
+    font-size:clamp(16px,2vw,19px);
+    color:#E7E3D9;
+    max-width:700px;
+    margin:16px auto 0;
+  }
+  .rule-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    margin-top:44px;
+  }
+  @media (max-width:860px){ .rule-grid{grid-template-columns:repeat(2,1fr);} }
+  .rule-cell{
+    background:var(--surface);
+    padding:32px 22px;
+    text-align:center;
+  }
+  .rule-num{
+    font-family:var(--mono);
+    font-size:clamp(24px,3.2vw,32px);
+    font-weight:600;
+    color:var(--warm);
+  }
+  .rule-label{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.45;
+  }
+
+  /* ---------- optimize ---------- */
+  .optimize{
+    padding:80px 0 90px;
+    border-bottom:1px solid var(--line);
+    background:var(--surface-2);
+  }
+  .optimize-head{text-align:center; margin-bottom:50px;}
+  .optimize-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5vw,48px);
+  }
+  .optimize-head p{
+    color:var(--muted);
+    margin-top:12px;
+    max-width:620px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .optimize-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  @media (max-width:860px){
+    .optimize-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  .optimize-card{
+    background:var(--surface);
+    padding:32px 24px;
+  }
+  .optimize-icon{
+    width:42px; height:42px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+  }
+  .optimize-icon svg{width:22px; height:22px;}
+  .optimize-name{
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:10px;
+  }
+  .optimize-desc{
+    font-size:13.5px;
+    color:#B9B4A8;
+    line-height:1.55;
+  }
+
+  /* ---------- tools ---------- */
+  .tools{
+    padding:80px 0 90px;
+    border-bottom:1px solid var(--line);
+  }
+  .tools-head{text-align:center; margin-bottom:40px;}
+  .tools-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5vw,48px);
+  }
+  .tools-head p{color:var(--muted); margin-top:12px;}
+
+  .tools-body{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .tool-category{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:18px;
+    align-items:baseline;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .tool-category:first-child{border-top:none; padding-top:0;}
+  .tool-category h3{
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    line-height:1.4;
+  }
+  .tool-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .tool-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:7px 14px 7px 8px;
+  }
+  .tool-chip-icon{
+    width:22px; height:22px;
+    border-radius:6px;
+    background:rgba(255,255,255,0.05);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .tool-chip-icon svg{width:12px; height:12px;}
+  .tool-chip-name{font-size:13px; font-weight:600; white-space:nowrap;}
+
+  @media (max-width:640px){
+    .tools{padding:54px 0 64px;}
+    .tools-head{margin-bottom:26px;}
+    .tools-body{gap:0;}
+    .tool-category{
+      grid-template-columns:1fr;
+      gap:10px;
+      padding:14px 0;
+    }
+    .tool-chip{padding:6px 12px 6px 7px; gap:6px;}
+    .tool-chip-icon{width:19px; height:19px;}
+    .tool-chip-icon svg{width:11px; height:11px;}
+    .tool-chip-name{font-size:12.5px;}
+  }
+
+  /* ---------- proof band ---------- */
+  .proof{ position:relative; padding:80px 0; overflow:hidden; }
+  .proof-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:68% 20%;
+    z-index:0;
+  }
+  .proof-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(20,23,28,0.86) 0%, rgba(20,23,28,0.8) 45%, rgba(20,23,28,0.92) 100%);
+    z-index:1;
+  }
+  .proof .wrap{position:relative; z-index:2;}
+  @media (max-width:640px){
+    .proof-bg{object-position:74% 14%;}
+  }
+  .proof-head{text-align:center; margin-bottom:44px;}
+  .proof-head h2{
+    font-family:var(--display);
+    font-size:clamp(28px,5vw,44px);
+  }
+  .proof-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  @media (max-width:860px){ .proof-grid{grid-template-columns:repeat(2,1fr);} }
+
+  .proof-cell{
+    background:rgba(27,31,39,0.9);
+    padding:34px 24px;
+    text-align:center;
+  }
+  .proof-num{
+    font-family:var(--mono);
+    font-size:clamp(26px,3.6vw,36px);
+    font-weight:600;
+  }
+  .proof-num.is-warm{color:var(--warm);}
+  .proof-num.is-cool{color:var(--cool);}
+  .proof-label{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:8px;
+    line-height:1.4;
+  }
+  .proof-note{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    margin-top:18px;
+  }
+
+  /* ---------- contact ---------- */
+  .contact{
+    padding:100px 0 110px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  .contact h2{
+    font-family:var(--display);
+    font-size:clamp(36px,7vw,72px);
+    letter-spacing:0.01em;
+    margin-bottom:20px;
+  }
+  .contact h2 .accent{color:var(--warm);}
+  .contact p{color:var(--muted); max-width:520px; margin:0 auto 36px;}
+  .contact-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .contact-social{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-top:26px;
+  }
+
+  /* ---------- visita mis redes ---------- */
+  .follow-section{
+    position:relative;
+    padding:80px 0 90px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .follow-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:68% 22%;
+    z-index:0;
+  }
+  .follow-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(20,23,28,0.86) 0%, rgba(20,23,28,0.8) 45%, rgba(20,23,28,0.92) 100%);
+    z-index:1;
+  }
+  .follow-section .wrap{position:relative; z-index:2;}
+  @media (max-width:640px){
+    .follow-bg{object-position:74% 16%;}
+  }
+  .follow-head{text-align:center; margin-bottom:44px;}
+  .follow-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5.5vw,50px);
+  }
+  .follow-head p{color:var(--muted); margin-top:12px;}
+  .follow-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+  }
+  @media (max-width:760px){ .follow-grid{grid-template-columns:1fr;} }
+  .follow-card{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:26px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:var(--accent-bg);
+    text-decoration:none;
+    color:var(--text);
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .follow-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--accent);
+    background:var(--accent-bg-hover);
+  }
+  .follow-card:focus-visible{outline:2px solid var(--text); outline-offset:3px;}
+  .follow-card-icon{
+    width:54px; height:54px;
+    border-radius:50%;
+    background:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .follow-card-icon svg{width:25px; height:25px; color:var(--bg);}
+  .follow-card-body{flex:1; min-width:0;}
+  .follow-card-name{font-family:var(--display); font-weight:700; font-size:18px;}
+  .follow-card-sub{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:3px;}
+  .follow-card-arrow{
+    font-size:20px;
+    color:var(--accent);
+    flex-shrink:0;
+    transition:transform .2s ease;
+  }
+  .follow-card:hover .follow-card-arrow{transform:translateX(4px);}
+
+  /* ---------- media kit ---------- */
+  .mediakit{
+    padding:70px 0;
+    border-top:1px solid var(--line);
+  }
+  .mediakit-box{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:38px 40px;
+  }
+  .mediakit-text .eyebrow{margin-bottom:10px; color:var(--warm);}
+  .mediakit-text h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(24px,3.6vw,32px);
+    margin-bottom:8px;
+  }
+  .mediakit-text p{color:var(--muted); font-size:14.5px; max-width:480px;}
+  .mediakit-icon{
+    width:20px; height:20px;
+  }
+  .mediakit-box .btn.is-primary{
+    background:var(--warm);
+    color:var(--text);
+    border-color:var(--warm);
+  }
+  .mediakit-box .btn.is-primary:hover{background:#FF8563;}
+  @media (max-width:720px){
+    .mediakit-box{flex-direction:column; align-items:flex-start; padding:30px 26px; text-align:left;}
+  }
+
+  /* ---------- tarifas ---------- */
+  .pricing{
+    padding:80px 0 90px;
+    border-top:1px solid var(--line);
+  }
+  .pricing-head{max-width:640px; margin-bottom:48px;}
+  .pricing-head h2{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(30px,5.5vw,50px);
+    margin:10px 0 14px;
+  }
+  .pricing-head p{color:var(--muted); font-size:15px;}
+
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:44px;
+    align-items:start;
+  }
+  @media (max-width:900px){
+    .pricing-grid{grid-template-columns:1fr;}
+  }
+
+  .pricing-block{margin-bottom:36px;}
+  .pricing-block:last-child{margin-bottom:0;}
+  .pricing-block-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:16px;
+  }
+
+  /* duration slider */
+  .duration-slider{padding:10px 0 6px;}
+  .duration-slider input[type="range"]{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    height:4px;
+    border-radius:999px;
+    background:var(--line);
+    outline:none;
+    margin:0;
+  }
+  .duration-slider input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:22px; height:22px;
+    border-radius:50%;
+    background:var(--warm);
+    border:3px solid var(--bg);
+    box-shadow:0 0 0 1px var(--warm);
+    cursor:pointer;
+  }
+  .duration-slider input[type="range"]::-moz-range-track{
+    height:4px;
+    border-radius:999px;
+    background:var(--line);
+  }
+  .duration-slider input[type="range"]::-moz-range-thumb{
+    width:22px; height:22px;
+    border-radius:50%;
+    background:var(--warm);
+    border:3px solid var(--bg);
+    box-shadow:0 0 0 1px var(--warm);
+    cursor:pointer;
+  }
+  .duration-slider input[type="range"]:focus-visible{outline:2px solid var(--text); outline-offset:6px;}
+  .duration-ticks{
+    display:flex; justify-content:space-between;
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+  }
+  .duration-ticks span{transition:color .15s ease;}
+  .duration-ticks span.is-active{color:var(--warm); font-weight:600;}
+
+  /* service cards */
+  .service-cards{display:flex; flex-direction:column; gap:10px;}
+  .service-card{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:16px 18px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .service-card:hover{border-color:rgba(242,239,233,0.22);}
+  .service-card.is-active{border-color:var(--warm); background:var(--warm-dim);}
+  .service-card input[type="radio"]{position:absolute; opacity:0; pointer-events:none;}
+  .service-card-name{
+    font-weight:600;
+    font-size:14.5px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .service-card-price{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:15px;
+    color:var(--warm);
+    white-space:nowrap;
+  }
+
+  /* info icon + tooltip */
+  .info-icon{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:16px; height:16px;
+    border-radius:50%;
+    border:1px solid var(--muted);
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:10px;
+    font-style:italic;
+    cursor:pointer;
+    flex-shrink:0;
+    position:relative;
+    background:transparent;
+    padding:0;
+  }
+  .info-icon:hover, .info-icon:focus-visible, .info-icon.is-open{border-color:var(--text); color:var(--text);}
+  .info-icon:focus-visible{outline:2px solid var(--text); outline-offset:3px;}
+  .tooltip-bubble{
+    position:absolute;
+    bottom:calc(100% + 10px);
+    left:50%;
+    transform:translateX(-50%) translateY(4px);
+    width:230px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    font-family:var(--body);
+    font-size:12.5px;
+    font-weight:400;
+    line-height:1.5;
+    color:#D7D2C6;
+    text-align:left;
+    z-index:10;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .15s ease, transform .15s ease;
+    pointer-events:none;
+  }
+  .info-icon:hover .tooltip-bubble,
+  .info-icon:focus-visible .tooltip-bubble,
+  .info-icon.is-open .tooltip-bubble{
+    opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);
+  }
+  @media (max-width:480px){
+    .tooltip-bubble{width:190px; left:auto; right:-12px; transform:translateY(4px);}
+    .info-icon:hover .tooltip-bubble,
+    .info-icon:focus-visible .tooltip-bubble,
+    .info-icon.is-open .tooltip-bubble{transform:translateY(0);}
+  }
+
+  /* package selector */
+  .package-pills{display:flex; gap:10px; flex-wrap:wrap;}
+  .package-pill{
+    position:relative;
+    padding:12px 18px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .15s ease, background .15s ease;
+    min-width:84px;
+  }
+  .package-pill:hover{border-color:rgba(242,239,233,0.22);}
+  .package-pill.is-active{border-color:var(--warm); background:var(--warm-dim);}
+  .package-pill input{position:absolute; opacity:0; pointer-events:none;}
+  .package-pill-qty{font-weight:700; font-size:15px;}
+  .package-pill-discount{font-family:var(--mono); font-size:11px; color:var(--cool); margin-top:2px;}
+
+  /* cross-posting checkboxes */
+  .platform-rows{display:flex; flex-direction:column; gap:10px;}
+  .platform-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    cursor:pointer;
+    transition:border-color .15s ease;
+  }
+  .platform-row:hover{border-color:rgba(242,239,233,0.22);}
+  .platform-row.is-active{border-color:var(--cool);}
+  .platform-row input{width:16px; height:16px; accent-color:var(--cool); flex-shrink:0;}
+  .platform-row-name{font-weight:600; font-size:14px;}
+  .platform-row-meta{font-size:12px; color:var(--muted); margin-top:2px; display:block;}
+  .platform-row-price{font-family:var(--mono); font-weight:600; font-size:14px; color:var(--cool); white-space:nowrap;}
+
+  /* summary panel */
+  .pricing-summary{
+    position:sticky;
+    top:90px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px 26px;
+  }
+  @media (max-width:900px){
+    .pricing-summary{position:static;}
+  }
+  .pricing-summary h3{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:16px;
+    margin-bottom:18px;
+  }
+  .summary-line{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:12.5px;
+    color:var(--muted);
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .summary-line:first-child{padding-top:0;}
+  .summary-line-label{max-width:65%;}
+  .summary-line-value{font-family:var(--mono); color:var(--text); white-space:nowrap;}
+  .summary-line-discount{color:var(--cool) !important;}
+  .summary-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-top:18px;
+    padding-top:4px;
+  }
+  .summary-total-label{font-weight:700; font-size:14px;}
+  .summary-total-value{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:28px;
+    color:var(--warm);
+  }
+  .pricing-cta{display:flex; width:100%; margin-top:22px;}
+  .pricing-cta .btn{width:100%; justify-content:center;}
+  .pricing-cta-note{
+    font-size:11.5px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:10px;
+    line-height:1.4;
+  }
+
+  .print-only{display:none;}
+  @media print{
+    body *{visibility:hidden;}
+    #printSummary, #printSummary *{visibility:visible;}
+    #printSummary{
+      display:block;
+      position:absolute;
+      top:0; left:0;
+      width:100%;
+      padding:48px;
+      background:#fff;
+      color:#111;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+    #printSummary h1{font-size:22px; margin-bottom:4px;}
+    #printSummary .print-sub{font-size:12px; color:#666; margin-bottom:28px;}
+    #printSummary table{width:100%; border-collapse:collapse; font-size:13px;}
+    #printSummary td{padding:9px 0; border-bottom:1px solid #ddd;}
+    #printSummary td:last-child{text-align:right; white-space:nowrap;}
+    #printSummary tr.print-discount td{color:#c25a3c;}
+    #printSummary tr.print-total td{
+      border-bottom:none;
+      border-top:2px solid #111;
+      font-weight:700;
+      font-size:17px;
+      padding-top:14px;
+    }
+    #printSummary .print-footer{margin-top:36px; font-size:11.5px; color:#666;}
+  }
+
+  footer{
+    padding:30px 0 50px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .btn{transition:none;}
+    .service-card, .package-pill, .platform-row, .info-icon, .tooltip-bubble, .duration-ticks span{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">PATRICK <span>BRAVO</span></div>
+      <div class="navlinks">
+        <a href="#influencer">UGC</a>
+        <a href="https://drive.google.com/file/d/1n4Qz9I9HMQC4AJ_u3H7qyS9MsLTlWa1E/view?usp=sharing" target="_blank" rel="noopener">Media</a>
+        <a href="#metodo">Método</a>
+        <a href="#contacto">Contacto</a>
+        <a href="https://neuralclab-ugc.vercel.app/" target="_blank" rel="noopener">Tech</a>
+      </div>
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#influencer">UGC</a>
+      <a href="https://drive.google.com/file/d/1n4Qz9I9HMQC4AJ_u3H7qyS9MsLTlWa1E/view?usp=sharing" target="_blank" rel="noopener">Media</a>
+      <a href="#metodo">Método</a>
+      <a href="#contacto">Contacto</a>
+      <a href="https://neuralclab-ugc.vercel.app/" target="_blank" rel="noopener">Tech</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-inner">
+      <h1>PATRICK<br><span class="accent">BRAVO</span></h1>
+      <p class="lede">Cuento historias que enganchan a una audiencia real. Uso los datos para que el contenido funcione.</p>
+      <div class="hero-actions">
+        <a href="https://www.instagram.com/patrick_bravo_oficial/" target="_blank" rel="noopener" class="social-btn" style="--accent:#9B8CFF; --accent-bg:rgba(155,140,255,0.16); --accent-glow:rgba(155,140,255,0.5);">
+          <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+          <span class="social-btn-label">Instagram</span>
+        </a>
+        <a href="https://www.youtube.com/channel/UCu9b75qWAepseF1SC-rdt8Q/" target="_blank" rel="noopener" class="social-btn" style="--accent:#FF6B45; --accent-bg:rgba(255,107,69,0.16); --accent-glow:rgba(255,107,69,0.5);">
+          <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
+          <span class="social-btn-label">YouTube</span>
+        </a>
+        <a href="https://www.tiktok.com/@patrickbravooficial" target="_blank" rel="noopener" class="social-btn" style="--accent:#FF6FA8; --accent-bg:rgba(255,111,168,0.16); --accent-glow:rgba(255,111,168,0.5);">
+          <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg></span>
+          <span class="social-btn-label">TikTok</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="img/patrick-bravo-hero-2.jpg" alt="Patrick Bravo">
+    </div>
+  </div>
+</section>
+
+<section id="influencer" class="profile">
+  <div class="wrap">
+    <div class="profile-grid">
+      <div class="profile-photo">
+        <img src="img/patrick-bravo-influencer-portrait.jpg" alt="Patrick Bravo">
+      </div>
+
+      <div>
+        <div class="profile-head">
+          <p class="eyebrow pillar-eyebrow is-warm">PATRICK BRAVO</p>
+          <h2>Storytelling, actualidad y entretenimiento</h2>
+          <p>Storyteller y entretenimiento con un hilo de reconstrucción y cuidado personal. Presencia en Instagram, YouTube y TikTok.</p>
+        </div>
+
+        <div class="profile-body">
+          <div class="taglist">
+            <span class="tag is-warm">Storytelling</span>
+            <span class="tag is-warm">Entretenimiento</span>
+            <span class="tag is-warm">Contenido evergreen</span>
+            <span class="tag is-warm">Actualidad</span>
+            <span class="tag is-warm">Cuidado masculino</span>
+            <span class="tag is-warm">Motivación y superación</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="channel-stats">
+  <div class="wrap">
+    <div class="channel-stats-head">
+      <p class="eyebrow pillar-eyebrow is-warm">LOS CANALES, EN DETALLE</p>
+      <h2>Conoce mis audiencias en cada plataforma</h2>
+      <p>Cada uno de mis canales tiene su propia identidad, demografía y comportamiento.</p>
+    </div>
+
+    <div class="channel-card">
+      <div>
+        <div class="channel-card-head">
+          <span class="channel-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#9B8CFF" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#9B8CFF" stroke="none"/></svg></span>
+          <span class="channel-card-name">Instagram</span>
+        </div>
+        <div class="donut-block">
+          <svg width="140" height="140" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#FF6B45" stroke-width="12"
+              stroke-dasharray="156.75 263.89" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#3FE0C7" stroke-width="12"
+              stroke-dasharray="107.14 263.89" stroke-dashoffset="-156.75" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="donut-legend">
+            <span><i class="dot is-f"></i>Mujeres — 59.4%</span>
+            <span><i class="dot is-m"></i>Hombres — 40.6%</span>
+          </div>
+        </div>
+        <div class="age-bars">
+          <div class="age-row"><span class="age-label">13–17</span><span class="age-track"><span class="age-fill" style="width:3.8%; background:#6C8CFF"></span></span><span class="age-pct">3.8%</span></div>
+          <div class="age-row"><span class="age-label">18–24</span><span class="age-track"><span class="age-fill" style="width:9.1%; background:#3FE0C7"></span></span><span class="age-pct">9.1%</span></div>
+          <div class="age-row"><span class="age-label">25–34</span><span class="age-track"><span class="age-fill" style="width:19.2%; background:#56D97A"></span></span><span class="age-pct">19.2%</span></div>
+          <div class="age-row"><span class="age-label">35–44</span><span class="age-track"><span class="age-fill" style="width:26%; background:#F0C93F"></span></span><span class="age-pct">26.0%</span></div>
+          <div class="age-row"><span class="age-label">45–54</span><span class="age-track"><span class="age-fill" style="width:24%; background:#FF9F45"></span></span><span class="age-pct">24.0%</span></div>
+          <div class="age-row"><span class="age-label">55–64</span><span class="age-track"><span class="age-fill" style="width:12.7%; background:#FF6B45"></span></span><span class="age-pct">12.7%</span></div>
+          <div class="age-row"><span class="age-label">65+</span><span class="age-track"><span class="age-fill" style="width:5.1%; background:#FF6FA8"></span></span><span class="age-pct">5.1%</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="channel-meta"><b>Geografía:</b> España, EE.UU., Argentina y México — audiencia panhispánica real</p>
+        <div class="mini-stats">
+          <div class="mini-stat"><div class="mini-stat-num">18K+</div><div class="mini-stat-label">Seguidores</div></div>
+          <div class="mini-stat"><div class="mini-stat-num">50K</div><div class="mini-stat-label">Reproducciones, últimos 30 días</div></div>
+          <div class="mini-stat"><div class="mini-stat-num">19M</div><div class="mini-stat-label">Contenidos que llegan a picos Top</div></div>
+        </div>
+        <div class="channel-card-cta">
+          <a href="https://www.instagram.com/patrick_bravo_oficial/" target="_blank" rel="noopener" class="social-btn" style="--accent:#9B8CFF; --accent-bg:rgba(155,140,255,0.16); --accent-glow:rgba(155,140,255,0.5);">
+            <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel-card">
+      <div>
+        <div class="channel-card-head">
+          <span class="channel-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6B45" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="#FF6B45" stroke="none"/></svg></span>
+          <span class="channel-card-name">YouTube</span>
+        </div>
+        <div class="donut-block">
+          <svg width="140" height="140" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#FF6B45" stroke-width="12"
+              stroke-dasharray="15.83 263.89" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#3FE0C7" stroke-width="12"
+              stroke-dasharray="248.06 263.89" stroke-dashoffset="-15.83" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="donut-legend">
+            <span><i class="dot is-f"></i>Mujeres — 6%</span>
+            <span><i class="dot is-m"></i>Hombres — 94%</span>
+          </div>
+        </div>
+        <div class="age-bars">
+          <div class="age-row"><span class="age-label">13–17</span><span class="age-track"><span class="age-fill-group" style="width:3.4%"><span style="width:2.9%; background:#FF6B45"></span><span style="width:97.1%; background:#3FE0C7"></span></span></span><span class="age-pct">3.4%</span></div>
+          <div class="age-row"><span class="age-label">18–24</span><span class="age-track"><span class="age-fill-group" style="width:42.7%"><span style="width:7.5%; background:#FF6B45"></span><span style="width:92.5%; background:#3FE0C7"></span></span></span><span class="age-pct">42.7%</span></div>
+          <div class="age-row"><span class="age-label">25–34</span><span class="age-track"><span class="age-fill-group" style="width:35.5%"><span style="width:5.4%; background:#FF6B45"></span><span style="width:94.6%; background:#3FE0C7"></span></span></span><span class="age-pct">35.5%</span></div>
+          <div class="age-row"><span class="age-label">35–44</span><span class="age-track"><span class="age-fill-group" style="width:12.6%"><span style="width:5.6%; background:#FF6B45"></span><span style="width:94.4%; background:#3FE0C7"></span></span></span><span class="age-pct">12.6%</span></div>
+          <div class="age-row"><span class="age-label">45–54</span><span class="age-track"><span class="age-fill-group" style="width:4.2%"><span style="width:4.8%; background:#FF6B45"></span><span style="width:95.2%; background:#3FE0C7"></span></span></span><span class="age-pct">4.2%</span></div>
+          <div class="age-row"><span class="age-label">55–64</span><span class="age-track"><span class="age-fill-group" style="width:1.2%"><span style="width:0%; background:#FF6B45"></span><span style="width:100%; background:#3FE0C7"></span></span></span><span class="age-pct">1.2%</span></div>
+          <div class="age-row"><span class="age-label">65+</span><span class="age-track"><span class="age-fill-group" style="width:0.5%"><span style="width:0%; background:#FF6B45"></span><span style="width:100%; background:#3FE0C7"></span></span></span><span class="age-pct">0.5%</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="mini-stats">
+          <div class="mini-stat"><div class="mini-stat-num">17K</div><div class="mini-stat-label">Seguidores</div></div>
+          <div class="mini-stat"><div class="mini-stat-num">2M</div><div class="mini-stat-label">Vídeos con hasta 2M de reproducciones</div></div>
+        </div>
+        <p class="channel-note">Belleza de Hombre by Patrick Bravo hoy día es un canal de shorts que cuenta con 17.000 seguidores.</p>
+        <div class="channel-card-cta">
+          <a href="https://www.youtube.com/channel/UCu9b75qWAepseF1SC-rdt8Q/" target="_blank" rel="noopener" class="social-btn" style="--accent:#FF6B45; --accent-bg:rgba(255,107,69,0.16); --accent-glow:rgba(255,107,69,0.5);">
+            <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
+            YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel-card">
+      <div>
+        <div class="channel-card-head">
+          <span class="channel-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg></span>
+          <span class="channel-card-name">TikTok</span>
+        </div>
+        <div class="donut-block">
+          <svg width="140" height="140" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#FF6B45" stroke-width="12"
+              stroke-dasharray="179.44 263.89" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#3FE0C7" stroke-width="12"
+              stroke-dasharray="84.44 263.89" stroke-dashoffset="-179.44" transform="rotate(-90 50 50)"/>
+          </svg>
+          <div class="donut-legend">
+            <span><i class="dot is-f"></i>Mujeres — 68%</span>
+            <span><i class="dot is-m"></i>Hombres — 32%</span>
+          </div>
+        </div>
+        <div class="age-bars">
+          <div class="age-row"><span class="age-label">18–24</span><span class="age-track"><span class="age-fill" style="width:2.5%; background:#3FE0C7"></span></span><span class="age-pct">2.5%</span></div>
+          <div class="age-row"><span class="age-label">25–34</span><span class="age-track"><span class="age-fill" style="width:11%; background:#56D97A"></span></span><span class="age-pct">11.0%</span></div>
+          <div class="age-row"><span class="age-label">35–44</span><span class="age-track"><span class="age-fill" style="width:20%; background:#F0C93F"></span></span><span class="age-pct">20.0%</span></div>
+          <div class="age-row"><span class="age-label">45–54</span><span class="age-track"><span class="age-fill" style="width:33.3%; background:#FF9F45"></span></span><span class="age-pct">33.3%</span></div>
+          <div class="age-row"><span class="age-label">55+</span><span class="age-track"><span class="age-fill" style="width:33.2%; background:#FF6B45"></span></span><span class="age-pct">33.2%</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="mini-stats">
+          <div class="mini-stat"><div class="mini-stat-num">2.8K+</div><div class="mini-stat-label">Seguidores (+2.3K en 7 días)</div></div>
+          <div class="mini-stat"><div class="mini-stat-num">983K</div><div class="mini-stat-label">Espectadores, últimos 365 días</div></div>
+          <div class="mini-stat"><div class="mini-stat-num">TIKTOK LIVE</div><div class="mini-stat-label">Directos con cifras de hasta 7.000 visualizaciones, 1.000 comentarios y 18.000 likes</div></div>
+        </div>
+        <div class="channel-card-cta">
+          <a href="https://www.tiktok.com/@patrickbravooficial" target="_blank" rel="noopener" class="social-btn" style="--accent:#FF6FA8; --accent-bg:rgba(255,111,168,0.16); --accent-glow:rgba(255,111,168,0.5);">
+            <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg></span>
+            TikTok
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="live-section">
+  <div class="wrap">
+    <div class="live-inner">
+      <div>
+        <p class="eyebrow pillar-eyebrow is-warm">OTRA VÍA DE CRECIMIENTO ORGÁNICO</p>
+        <img class="live-badge" src="img/tiktok-live-badge.png" alt="TikTok Live">
+        <p class="lead">Los directos no son solo "estar ahí", son una palanca real de captación y fidelización.</p>
+      </div>
+      <ul class="live-list">
+        <li>Los directos de la saga Diario de ex Fumador, no solo han logrado crecimiento de seguidores además han hecho cifras de hasta 7.000 visualizaciones, 1.000 comentarios y 18.000 likes.</li>
+        <li>Experiencia en la retención de audiencias en directo con conversación en tiempo real sin perder el hilo</li>
+        <li>Capacidad de crear lives temáticos orientados a marcas, servicios o productos.</li>
+      </ul>
+    </div>
+    <div class="live-cta">
+      <a href="https://www.tiktok.com/@patrickbravooficial" target="_blank" rel="noopener" class="social-btn" style="--accent:#FF6FA8; --accent-bg:rgba(255,111,168,0.16); --accent-glow:rgba(255,111,168,0.5);">
+        <span class="social-btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg></span>
+        TikTok
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="comm-section">
+  <img class="comm-bg" src="img/comm-bg.jpg" alt="">
+  <div class="comm-overlay"></div>
+  <div class="wrap">
+    <div class="comm-head">
+      <p class="eyebrow">MÁS ALLÁ DEL PERSONAJE</p>
+      <h2>SABER COMUNICAR,<br>LO ES TODO</h2>
+      <p>No es un solo registro de voz, es saber cambiar de piel según lo que la marca o producto requiera, sin dejar de sonar con mi estilo personal.</p>
+    </div>
+
+    <div class="comm-grid">
+      <div class="comm-card">
+        <div class="comm-card-num">01</div>
+        <div class="comm-card-title">Storytelling personal</div>
+        <div class="comm-card-desc">Hablo de forma cercana sobre mi vida, caídas y levantadas sin impostar un discurso.</div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-card-num">02</div>
+        <div class="comm-card-title">Entretenimiento</div>
+        <div class="comm-card-desc">Mi contenido se diseña tanto para dar una respuesta como para conectar con las diferentes emociones de las personas.</div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-card-num">03</div>
+        <div class="comm-card-title">Versatilidad</div>
+        <div class="comm-card-desc">Sé cómo explicar temas complejos (algoritmos, IA) de forma sencilla, sin perder rigor.</div>
+      </div>
+      <div class="comm-card is-strong">
+        <div class="comm-card-num">04</div>
+        <div class="comm-card-title">Venta publicitaria (UGC)</div>
+        <div class="comm-card-desc">Presento un producto de forma natural, sin sonar a anuncio — la habilidad que buscan las marcas para TikTok Shop.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="metodo" class="method">
+  <div class="wrap">
+    <div class="method-head">
+      <p class="eyebrow">CÓMO TRABAJO</p>
+      <h2>EL MÉTODO</h2>
+      <p>No improviso delante de la cámara. Cada vídeo pasa por el mismo proceso de tres pasos, afinado con datos reales de retención, no con intuición.</p>
+    </div>
+
+    <div class="method-steps">
+      <div class="step">
+        <p class="step-num">01 — PROSPECCIÓN</p>
+        <h3>Encontrar qué contar</h3>
+        <ul>
+          <li>Research de temáticas en tendencia</li>
+          <li>Análisis de nichos de interés</li>
+          <li>Audito en cada red social lo que está en tendencia</li>
+        </ul>
+      </div>
+      <div class="step">
+        <p class="step-num">02 — CREACIÓN</p>
+        <h3>Producir con criterio</h3>
+        <ul>
+          <li>Grabación</li>
+          <li>Edición y montaje</li>
+          <li>Diseño de carátulas y portadas (Reels, Shorts, TikTok)</li>
+        </ul>
+      </div>
+      <div class="step">
+        <p class="step-num">03 — GESTIÓN</p>
+        <h3>Distribuir con intención</h3>
+        <ul>
+          <li>Subida a cada red social</li>
+          <li>Programación de publicaciones</li>
+          <li>Optimización específica para cada plataforma</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guiones" class="scripts">
+  <div class="wrap">
+    <div class="scripts-head">
+      <p class="eyebrow">EL CORAZÓN DEL MÉTODO</p>
+      <h2>GUIONES</h2>
+      <p class="lead">Guiones construidos sobre curvas de retención reales, validadas segundo a segundo — no sobre intuición.</p>
+    </div>
+
+    <div class="rule-grid">
+      <div class="rule-cell">
+        <div class="rule-num">0:05</div>
+        <div class="rule-label">Segundo en el que se decide el 50% de la retención</div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-num">0:07–0:20</div>
+        <div class="rule-label">Ventana de hook validada empíricamente</div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-num">1:20–1:35</div>
+        <div class="rule-label">Duración óptima de vídeo</div>
+      </div>
+      <div class="rule-cell">
+        <div class="rule-num">15s</div>
+        <div class="rule-label">Ventana de indexación por búsqueda (ASR)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="optimize">
+  <div class="wrap">
+    <div class="optimize-head">
+      <p class="eyebrow">MÁS ALLÁ DE CREAR</p>
+      <h2>OPTIMIZACIÓN DE CONTENIDOS</h2>
+      <p>Crear es solo el primer paso. Cada pieza se adapta a cómo indexa y prioriza cada plataforma — con 14 años de SEO detrás, aplicados ahora al algoritmo del vídeo corto.</p>
+    </div>
+
+    <div class="optimize-grid">
+      <div class="optimize-card">
+        <div class="optimize-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6B45" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="#FF6B45" stroke="none"/></svg></div>
+        <div class="optimize-name">YouTube</div>
+        <div class="optimize-desc">Optimizo títulos, empleo keywords de búsquedas, por lo que la gente ya está buscando o temas que están en tendencia.</div>
+      </div>
+      <div class="optimize-card">
+        <div class="optimize-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg></div>
+        <div class="optimize-name">TikTok</div>
+        <div class="optimize-desc">Optimizo el contenido a nivel SEO desde títulos a textos, empleando un etiquetado optimizado perfecto mediante hashtags.</div>
+      </div>
+      <div class="optimize-card">
+        <div class="optimize-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#9B8CFF" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#9B8CFF" stroke="none"/></svg></div>
+        <div class="optimize-name">Instagram</div>
+        <div class="optimize-desc">Adapto el mismo contenido a una lógica de algoritmo distinta, sin perder el gancho que ya funciona en vídeo corto.</div>
+      </div>
+      <div class="optimize-card">
+        <div class="optimize-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#4C86E0" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="4"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#4C86E0" font-family="Sora, sans-serif">in</text></svg></div>
+        <div class="optimize-name">LinkedIn</div>
+        <div class="optimize-desc">Contenido técnico pensado para ser citado por buscadores de IA (GEO), no solo posicionado en Google.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="follow-section">
+  <img class="follow-bg" src="img/follow-bg.jpg" alt="">
+  <div class="follow-overlay"></div>
+  <div class="wrap">
+    <div class="follow-head">
+      <p class="eyebrow">SÍGUEME</p>
+      <h2>Visita mis redes</h2>
+    </div>
+    <div class="follow-grid">
+      <a href="https://www.instagram.com/patrick_bravo_oficial/" target="_blank" rel="noopener" class="follow-card" style="--accent:#9B8CFF; --accent-bg:rgba(155,140,255,0.12); --accent-bg-hover:rgba(155,140,255,0.22);">
+        <span class="follow-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+        <span class="follow-card-body">
+          <span class="follow-card-name">Instagram</span>
+          <span class="follow-card-sub">@patrick_bravo_oficial</span>
+        </span>
+        <span class="follow-card-arrow">→</span>
+      </a>
+      <a href="https://www.youtube.com/channel/UCu9b75qWAepseF1SC-rdt8Q/" target="_blank" rel="noopener" class="follow-card" style="--accent:#FF6B45; --accent-bg:rgba(255,107,69,0.12); --accent-bg-hover:rgba(255,107,69,0.22);">
+        <span class="follow-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
+        <span class="follow-card-body">
+          <span class="follow-card-name">YouTube</span>
+          <span class="follow-card-sub">Ver canal</span>
+        </span>
+        <span class="follow-card-arrow">→</span>
+      </a>
+      <a href="https://www.tiktok.com/@patrickbravooficial" target="_blank" rel="noopener" class="follow-card" style="--accent:#FF6FA8; --accent-bg:rgba(255,111,168,0.12); --accent-bg-hover:rgba(255,111,168,0.22);">
+        <span class="follow-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg></span>
+        <span class="follow-card-body">
+          <span class="follow-card-name">TikTok</span>
+          <span class="follow-card-sub">@patrickbravooficial</span>
+        </span>
+        <span class="follow-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="herramientas" class="tools">
+  <div class="wrap">
+    <div class="tools-head">
+      <p class="eyebrow">CON QUÉ TRABAJO</p>
+      <h2>MIS HERRAMIENTAS</h2>
+      <p>La tecnología que uso para dar vida a cada proyecto.</p>
+    </div>
+
+    <div class="tools-body">
+      <div class="tool-category">
+        <h3>Software de edición</h3>
+        <div class="tool-chips">
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6B45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <div class="tool-chip-name">Filmora</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3FE0C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+            <div class="tool-chip-name">CapCut</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <div class="tool-chip-name">InShot</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#9B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
+            <div class="tool-chip-name">Adobe Premiere</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-category">
+        <h3>LLMs y IA imagen</h3>
+        <div class="tool-chips">
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6B45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/></svg></div>
+            <div class="tool-chip-name">Claude</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3FE0C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+            <div class="tool-chip-name">ChatGPT</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#9B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/></svg></div>
+            <div class="tool-chip-name">Gemini</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+            <div class="tool-chip-name">Midjourney</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6B45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0 0 20 3 3 0 0 0 0-6h-1a2 2 0 0 1 0-4h4a3 3 0 0 0 0-6z"/><circle cx="7" cy="10" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="14" cy="7" r="1"/><circle cx="17" cy="10" r="1"/></svg></div>
+            <div class="tool-chip-name">Leonardo AI</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-category">
+        <h3>GenAI vídeo y clipeo</h3>
+        <div class="tool-chips">
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3FE0C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></div>
+            <div class="tool-chip-name">RunWay</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#9B8CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+            <div class="tool-chip-name">OpusClip</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-category">
+        <h3>Analítica y medición</h3>
+        <div class="tool-chips">
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6FA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div class="tool-chip-name">Instagram Insights</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#FF6B45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div class="tool-chip-name">TikTok Studio</div>
+          </div>
+          <div class="tool-chip">
+            <div class="tool-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3FE0C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div class="tool-chip-name">YouTube Studio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <img class="proof-bg" src="img/proof-bg.jpg" alt="">
+  <div class="proof-overlay"></div>
+  <div class="wrap">
+    <div class="proof-head">
+      <p class="eyebrow">LOS NÚMEROS</p>
+      <h2>Prueba, no promesa</h2>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-cell">
+        <div class="proof-num is-warm">18K+</div>
+        <div class="proof-label">Seguidores en Instagram</div>
+      </div>
+      <div class="proof-cell">
+        <div class="proof-num is-warm">17K+</div>
+        <div class="proof-label">Seguidores en YouTube</div>
+      </div>
+      <div class="proof-cell">
+        <div class="proof-num is-warm">983K</div>
+        <div class="proof-label">Espectadores en TikTok, últimos 365 días</div>
+      </div>
+      <div class="proof-cell">
+        <div class="proof-num is-warm">42K</div>
+        <div class="proof-label">Reproducciones en Instagram, últimos 30 días</div>
+      </div>
+    </div>
+    <p class="proof-note">Cifras a fecha de publicación de este portfolio — actualizables por periodo.</p>
+  </div>
+</section>
+
+<section id="tarifas" class="pricing">
+  <div class="wrap">
+    <div class="pricing-head">
+      <p class="eyebrow pillar-eyebrow is-warm">CONFIGURA TU PROYECTO</p>
+      <h2>Tarifas</h2>
+      <p>Ajusta duración, servicio y volumen — el precio se recalcula al momento, sin sorpresas cuando me escribas.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-controls">
+
+        <div class="pricing-block">
+          <div class="pricing-block-label">Duración del vídeo</div>
+          <div class="duration-slider">
+            <input type="range" id="durationRange" min="0" max="2" step="1" value="1" aria-label="Duración del vídeo">
+            <div class="duration-ticks">
+              <span data-duration="15">15 seg</span>
+              <span data-duration="30">30 seg</span>
+              <span data-duration="60">60 seg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-block">
+          <div class="pricing-block-label">Tipo de servicio</div>
+          <div class="service-cards">
+            <label class="service-card" data-service="simple">
+              <input type="radio" name="service" value="simple">
+              <span class="service-card-name">Vídeo UGC simple</span>
+              <span class="service-card-price" data-price-for="simple"></span>
+            </label>
+            <label class="service-card" data-service="guion">
+              <input type="radio" name="service" value="guion" checked>
+              <span class="service-card-name">
+                Vídeo UGC con guion propio
+                <button type="button" class="info-icon" aria-label="Más información">i
+                  <span class="tooltip-bubble">Guion escrito con datos reales de retención, medido frase a frase para mantener la atención — no se improvisa.</span>
+                </button>
+              </span>
+              <span class="service-card-price" data-price-for="guion"></span>
+            </label>
+            <label class="service-card" data-service="completo">
+              <input type="radio" name="service" value="completo">
+              <span class="service-card-name">
+                Vídeo UGC + edición completa
+                <button type="button" class="info-icon" aria-label="Más información">i
+                  <span class="tooltip-bubble">Entrego el vídeo listo para publicar: montaje, subtítulos y hook trabajados para frenar el scroll en el primer segundo.</span>
+                </button>
+              </span>
+              <span class="service-card-price" data-price-for="completo"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pricing-block">
+          <div class="pricing-block-label">Paquete de vídeos</div>
+          <div class="package-pills">
+            <label class="package-pill" data-package="1">
+              <input type="radio" name="package" value="1" checked>
+              <div class="package-pill-qty">1</div>
+              <div class="package-pill-discount">&nbsp;</div>
+            </label>
+            <label class="package-pill" data-package="3">
+              <input type="radio" name="package" value="3">
+              <div class="package-pill-qty">3</div>
+              <div class="package-pill-discount">-10%</div>
+            </label>
+            <label class="package-pill" data-package="6">
+              <input type="radio" name="package" value="6">
+              <div class="package-pill-qty">6</div>
+              <div class="package-pill-discount">-15%</div>
+            </label>
+            <label class="package-pill" data-package="12">
+              <input type="radio" name="package" value="12">
+              <div class="package-pill-qty">12</div>
+              <div class="package-pill-discount">-20%</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="pricing-block">
+          <div class="pricing-block-label">
+            Publicación cruzada (opcional)
+            <button type="button" class="info-icon" aria-label="Más información">i
+              <span class="tooltip-bubble">Solo activo esta opción cuando la marca encaja con el público de esta red concreta.</span>
+            </button>
+          </div>
+          <div class="platform-rows">
+            <label class="platform-row" data-platform="instagram">
+              <input type="checkbox" value="instagram">
+              <span style="flex:1">
+                <span class="platform-row-name">Instagram</span>
+                <span class="platform-row-meta">18.093 seguidores</span>
+              </span>
+              <span class="platform-row-price">+50€</span>
+            </label>
+            <label class="platform-row" data-platform="youtube">
+              <input type="checkbox" value="youtube">
+              <span style="flex:1">
+                <span class="platform-row-name">YouTube</span>
+                <span class="platform-row-meta">16.576 seguidores</span>
+              </span>
+              <span class="platform-row-price">+50€</span>
+            </label>
+            <label class="platform-row" data-platform="tiktok">
+              <input type="checkbox" value="tiktok">
+              <span style="flex:1">
+                <span class="platform-row-name">TikTok</span>
+                <span class="platform-row-meta">2.921 seguidores</span>
+              </span>
+              <span class="platform-row-price">+20€</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pricing-summary">
+        <h3>Tu configuración</h3>
+        <div id="summaryLines"></div>
+        <div class="summary-total">
+          <span class="summary-total-label">Total</span>
+          <span class="summary-total-value" id="summaryTotal">0€</span>
+        </div>
+        <div class="pricing-cta">
+          <button type="button" id="pricingCtaBtn" class="btn is-primary">Solicitar esta configuración</button>
+        </div>
+        <p class="pricing-cta-note">Se abre la vista de impresión (para guardar como PDF) y tu email, con el desglose ya escrito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="wrap">
+    <h2>HABLEMOS<br><span class="accent">DE COLABORAR.</span></h2>
+    <p>Si necesitas que cuente algo, este es el sitio.</p>
+    <div class="contact-actions">
+      <a href="mailto:patrickbravooficial@gmail.com" class="btn is-primary">patrickbravooficial@gmail.com</a>
+    </div>
+    <div class="contact-social">
+      <a href="https://www.instagram.com/patrick_bravo_oficial/" target="_blank" rel="noopener" class="social-btn-compact" style="--accent:#9B8CFF; --accent-glow:rgba(155,140,255,0.5);" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCu9b75qWAepseF1SC-rdt8Q/" target="_blank" rel="noopener" class="social-btn-compact" style="--accent:#FF6B45; --accent-glow:rgba(255,107,69,0.5);" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@patrickbravooficial" target="_blank" rel="noopener" class="social-btn-compact" style="--accent:#FF6FA8; --accent-glow:rgba(255,111,168,0.5);" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v11a4 4 0 1 1-4-4"/><path d="M16 8a5 5 0 0 0 5 5"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="mediakit">
+  <div class="wrap">
+    <div class="mediakit-box">
+      <div class="mediakit-text">
+        <p class="eyebrow">PARA MARCAS Y COLABORACIONES</p>
+        <h2>Descarga mi Media Kit</h2>
+        <p>Audiencia, métricas por plataforma y casos de uso reunidos en un solo documento, listo para compartir con tu equipo.</p>
+      </div>
+      <a href="https://drive.google.com/file/d/1n4Qz9I9HMQC4AJ_u3H7qyS9MsLTlWa1E/view?usp=sharing" target="_blank" rel="noopener" class="btn is-primary">
+        <svg class="mediakit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar Media Kit
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="tech-banner">
+  <div class="wrap">
+    <p class="eyebrow">OTRO REGISTRO, LA MISMA PERSONA</p>
+    <h2>Amo divulgar sobre tecnología</h2>
+    <p>Creo contenido Tech para audiencias globales: herramientas de IA, productividad y formación real a equipos de empresa.</p>
+    <a href="https://neuralclab-ugc.vercel.app/" target="_blank" rel="noopener" class="btn is-cool">Conoce mi registro Tech →</a>
+  </div>
+</section>
+
+<div id="printSummary" class="print-only"></div>
+
+<footer>
+  <div class="wrap">PATRICK BRAVO — INFLUENCER — 2026</div>
+</footer>
+
+<script>
+  (function(){
+    var btn = document.getElementById('hamburgerBtn');
+    var menu = document.getElementById('mobileMenu');
+    if(!btn || !menu) return;
+    btn.addEventListener('click', function(){
+      var isOpen = menu.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    menu.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+<script>
+  (function(){
+    var durationRange = document.getElementById('durationRange');
+    if(!durationRange) return; // sección de tarifas no presente en esta página
+
+    var DURATIONS = [15, 30, 60];
+
+    var SERVICES = {
+      simple:   { name:'Vídeo UGC simple',             prices:{15:60,  30:65,  60:70} },
+      guion:    { name:'Vídeo UGC con guion propio',   prices:{15:80,  30:92,  60:105} },
+      completo: { name:'Vídeo UGC + edición completa', prices:{15:110, 30:125, 60:140} }
+    };
+    var PACKAGE_DISCOUNT = { 1:0, 3:0.10, 6:0.15, 12:0.20 };
+    var PLATFORMS = {
+      instagram:{ label:'Instagram', price:50 },
+      youtube:  { label:'YouTube',   price:50 },
+      tiktok:   { label:'TikTok',    price:20 }
+    };
+    var CROSS_DISCOUNT = { 1:0, 2:0.15, 3:0.25 };
+
+    var state = {
+      duration: 30,
+      service: 'guion',
+      package: 1,
+      platforms: { instagram:false, youtube:false, tiktok:false }
+    };
+
+    function formatEUR(n){
+      return n.toLocaleString('es-ES', {minimumFractionDigits:2, maximumFractionDigits:2}) + '€';
+    }
+
+    function calc(s){
+      var unitPrice = SERVICES[s.service].prices[s.duration];
+      var discountRate = PACKAGE_DISCOUNT[s.package];
+      var subtotal = unitPrice * s.package;
+      var discountAmount = subtotal * discountRate;
+      var packageTotal = subtotal - discountAmount;
+
+      var selectedPlatforms = Object.keys(s.platforms).filter(function(k){ return s.platforms[k]; });
+      var crossSubtotal = selectedPlatforms.reduce(function(sum,k){ return sum + PLATFORMS[k].price; }, 0);
+      var crossDiscountRate = CROSS_DISCOUNT[selectedPlatforms.length] || 0;
+      var crossDiscountAmount = crossSubtotal * crossDiscountRate;
+      var crossTotal = crossSubtotal - crossDiscountAmount;
+
+      return {
+        unitPrice: unitPrice, discountRate: discountRate, subtotal: subtotal,
+        discountAmount: discountAmount, packageTotal: packageTotal,
+        selectedPlatforms: selectedPlatforms, crossSubtotal: crossSubtotal,
+        crossDiscountRate: crossDiscountRate, crossDiscountAmount: crossDiscountAmount,
+        crossTotal: crossTotal, grandTotal: packageTotal + crossTotal
+      };
+    }
+
+    function buildMailto(b, s){
+      var subject = encodeURIComponent('Solicitud de presupuesto — vídeo UGC');
+      var lines = [
+        'Servicio: ' + SERVICES[s.service].name,
+        'Duración: ' + s.duration + ' segundos',
+        'Paquete: ' + s.package + ' vídeo(s)'
+      ];
+      if (b.selectedPlatforms.length){
+        lines.push('Publicación cruzada: ' + b.selectedPlatforms.map(function(p){ return PLATFORMS[p].label; }).join(', '));
+      }
+      lines.push('');
+      lines.push('Total estimado: ' + formatEUR(b.grandTotal));
+      var body = encodeURIComponent(lines.join('\n'));
+      return 'mailto:patrickbravooficial@gmail.com?subject=' + subject + '&body=' + body;
+    }
+
+    function populatePrintSummary(b, s){
+      var target = document.getElementById('printSummary');
+      if (!target) return;
+
+      var today = new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' });
+      var rows = [];
+
+      rows.push('<tr><td>' + SERVICES[s.service].name + ' · ' + s.duration + 's (precio unitario)</td><td>' + formatEUR(b.unitPrice) + '</td></tr>');
+
+      if (s.package > 1){
+        rows.push('<tr><td>× ' + s.package + ' vídeos</td><td>' + formatEUR(b.subtotal) + '</td></tr>');
+        rows.push('<tr class="print-discount"><td>Descuento por volumen (-' + Math.round(b.discountRate*100) + '%)</td><td>-' + formatEUR(b.discountAmount) + '</td></tr>');
+      }
+
+      if (b.selectedPlatforms.length){
+        var names = b.selectedPlatforms.map(function(p){ return PLATFORMS[p].label; }).join(' + ');
+        rows.push('<tr><td>Publicación cruzada (' + names + ')</td><td>' + formatEUR(b.crossSubtotal) + '</td></tr>');
+        if (b.crossDiscountRate > 0){
+          rows.push('<tr class="print-discount"><td>Descuento por combinar redes (-' + Math.round(b.crossDiscountRate*100) + '%)</td><td>-' + formatEUR(b.crossDiscountAmount) + '</td></tr>');
+        }
+      }
+
+      rows.push('<tr class="print-total"><td>Total</td><td>' + formatEUR(b.grandTotal) + '</td></tr>');
+
+      target.innerHTML =
+        '<h1>Patrick Bravo — Presupuesto UGC</h1>' +
+        '<div class="print-sub">Configuración generada el ' + today + '</div>' +
+        '<table>' + rows.join('') + '</table>' +
+        '<div class="print-footer">Presupuesto orientativo, sujeto a confirmación final. Para cerrar el proyecto: patrickbravooficial@gmail.com</div>';
+    }
+
+    function renderSummary(b, s){
+      var lines = [];
+
+      lines.push(
+        '<div class="summary-line"><span class="summary-line-label">' +
+        SERVICES[s.service].name + ' · ' + s.duration + 's (precio unitario)</span>' +
+        '<span class="summary-line-value">' + formatEUR(b.unitPrice) + '</span></div>'
+      );
+
+      if (s.package > 1){
+        lines.push(
+          '<div class="summary-line"><span class="summary-line-label">× ' + s.package + ' vídeos</span>' +
+          '<span class="summary-line-value">' + formatEUR(b.subtotal) + '</span></div>'
+        );
+        lines.push(
+          '<div class="summary-line"><span class="summary-line-label summary-line-discount">Descuento por volumen (-' +
+          Math.round(b.discountRate*100) + '%)</span>' +
+          '<span class="summary-line-value summary-line-discount">-' + formatEUR(b.discountAmount) + '</span></div>'
+        );
+      }
+
+      if (b.selectedPlatforms.length){
+        var names = b.selectedPlatforms.map(function(p){ return PLATFORMS[p].label; }).join(' + ');
+        lines.push(
+          '<div class="summary-line"><span class="summary-line-label">Publicación cruzada (' + names + ')</span>' +
+          '<span class="summary-line-value">' + formatEUR(b.crossSubtotal) + '</span></div>'
+        );
+        if (b.crossDiscountRate > 0){
+          lines.push(
+            '<div class="summary-line"><span class="summary-line-label summary-line-discount">Descuento por combinar redes (-' +
+            Math.round(b.crossDiscountRate*100) + '%)</span>' +
+            '<span class="summary-line-value summary-line-discount">-' + formatEUR(b.crossDiscountAmount) + '</span></div>'
+          );
+        }
+      }
+
+      document.getElementById('summaryLines').innerHTML = lines.join('');
+      document.getElementById('summaryTotal').textContent = formatEUR(b.grandTotal);
+    }
+
+    function render(){
+      document.querySelectorAll('.duration-ticks span').forEach(function(el){
+        el.classList.toggle('is-active', Number(el.dataset.duration) === state.duration);
+      });
+
+      document.querySelectorAll('.service-card').forEach(function(card){
+        var key = card.dataset.service;
+        card.classList.toggle('is-active', key === state.service);
+        var priceEl = card.querySelector('[data-price-for="' + key + '"]');
+        if (priceEl) priceEl.textContent = formatEUR(SERVICES[key].prices[state.duration]);
+      });
+
+      document.querySelectorAll('.package-pill').forEach(function(pill){
+        pill.classList.toggle('is-active', Number(pill.dataset.package) === state.package);
+      });
+
+      document.querySelectorAll('.platform-row').forEach(function(row){
+        var key = row.dataset.platform;
+        row.classList.toggle('is-active', !!state.platforms[key]);
+      });
+
+      renderSummary(calc(state), state);
+    }
+
+    durationRange.addEventListener('input', function(){
+      state.duration = DURATIONS[Number(this.value)];
+      render();
+    });
+
+    document.querySelectorAll('input[name="service"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        state.service = this.value;
+        render();
+      });
+    });
+
+    document.querySelectorAll('input[name="package"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        state.package = Number(this.value);
+        render();
+      });
+    });
+
+    document.querySelectorAll('.platform-row input[type="checkbox"]').forEach(function(cb){
+      cb.addEventListener('change', function(){
+        state.platforms[this.value] = this.checked;
+        render();
+      });
+    });
+
+    var ctaBtn = document.getElementById('pricingCtaBtn');
+    if (ctaBtn){
+      ctaBtn.addEventListener('click', function(){
+        var b = calc(state);
+        populatePrintSummary(b, state);
+        window.print();
+        setTimeout(function(){
+          window.location.href = buildMailto(b, state);
+        }, 300);
+      });
+    }
+
+    document.querySelectorAll('.info-icon').forEach(function(icon){
+      icon.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var wasOpen = icon.classList.contains('is-open');
+        document.querySelectorAll('.info-icon.is-open').forEach(function(i){ i.classList.remove('is-open'); });
+        if (!wasOpen) icon.classList.add('is-open');
+      });
+    });
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('.info-icon')){
+        document.querySelectorAll('.info-icon.is-open').forEach(function(i){ i.classList.remove('is-open'); });
+      }
+    });
+
+    render();
+  })();
+</script>
+
+</body>
+</html>
