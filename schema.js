@@ -57,14 +57,13 @@ function buildSchema(route, site) {
         })),
       };
 
-    case "Person":
-      return {
-        ...base,
+    case "Person": {
+      const profilePageNode = {
         "@type": "ProfilePage",
         mainEntity: {
           "@type": "Person",
           "@id": `${site.baseUrl}/#person`,
-          name: site.name,
+          name: site.personName || site.name,
           url: site.baseUrl,
           image: route.image || site.defaultImage,
           description: route.description,
@@ -82,6 +81,21 @@ function buildSchema(route, site) {
             : {}),
         },
       };
+
+      if (!route.faq) {
+        return { ...base, ...profilePageNode };
+      }
+
+      const faqNode = {
+        "@type": "FAQPage",
+        mainEntity: route.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      };
+      return { ...base, "@graph": [profilePageNode, faqNode] };
+    }
 
     case "ServicePage": {
       // Service conectado al Person vía @id (misma persona, no una entidad nueva)
