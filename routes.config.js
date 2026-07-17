@@ -23,6 +23,7 @@
 
 const SITE = {
   name: "Patrick Bravo",
+  personName: "Patrick Bravo",
   baseUrl: "https://patrick-bravo-kappa.vercel.app", // aún sin dominio propio
   defaultImage: "https://patrick-bravo-kappa.vercel.app/img/og-default.jpg",
   twitterHandle: "@patrick_bravo_oficial",
@@ -30,6 +31,11 @@ const SITE = {
   sameAs: [
     "https://www.tiktok.com/@patrick_bravo_oficial",
     "https://www.instagram.com/patrick_bravo_oficial",
+    // Entidad cruzada: mismo Patrick, frente de contenido IA/tecnología
+    "https://neuralclab-ugc.vercel.app/",
+    "https://www.youtube.com/channel/UC_EQH_U6yBtna6zt81mbBCQ",
+    "https://www.tiktok.com/@neuralclab",
+    "https://www.instagram.com/neuralclab",
   ],
   // Señales reputacionales (ajusta las cifras si cambian)
   stats: [
@@ -68,16 +74,25 @@ const ROUTES = [
     image: "https://patrick-bravo-kappa.vercel.app/img/og-para-marcas.jpg",
     faq: [
       {
-        q: "¿Cómo contrato a Patrick Bravo como creador de contenido?",
-        a: "Puedes revisar el media kit y las tarifas en esta página y contactar directamente por email para negociar el brief.",
+        q: "¿Cómo contrato a un creador de contenido como Patrick Bravo?",
+        a: "Puedes revisar el media kit y las tarifas en esta página y contactar directamente por email para negociar el brief y el pago (70% al inicio, 30% a la entrega).",
       },
       {
-        q: "¿Qué incluye el portfolio de Patrick Bravo?",
-        a: "Vídeos UGC con guion propio, contenido de transformación personal y publicación cruzada en TikTok e Instagram.",
+        q: "¿Dónde puedo ver el media kit de Patrick Bravo?",
+        a: "El media kit con datos de audiencia, tarifas y ejemplos de trabajo está disponible para descarga directa en esta página.",
+      },
+      {
+        q: "¿Tiene portfolio Patrick Bravo como creador de contenido?",
+        a: "Sí, el portfolio incluye vídeos UGC con guion propio, contenido de transformación personal y ejemplos de publicación cruzada en TikTok e Instagram.",
+      },
+      {
+        q: "¿Qué es un creador de contenido UGC?",
+        a: "Un creador de contenido UGC (User Generated Content) produce vídeos con estilo auténtico y personal para que las marcas los usen en sus propios canales de publicidad y redes.",
       },
     ],
     // keywords: contratar creador de contenido · media kit influencer ·
-    // media kit para influencers · portfolio creador de contenido
+    // media kit para influencers · portfolio creador de contenido ·
+    // creador de contenido ugc
   },
   {
     path: "/belleza-fitness",
