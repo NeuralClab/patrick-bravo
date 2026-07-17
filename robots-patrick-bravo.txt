@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Rutas sensibles fuera de rastreo
+Disallow: /api/
+Disallow: /admin/
+Disallow: /config/
+Disallow: /*.json$
+Disallow: /*?*utm_
+
+# Acceso explícito a crawlers de IA generativa (GEO) — los queremos citando
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://patrick-bravo-kappa.vercel.app/sitemap.xml
